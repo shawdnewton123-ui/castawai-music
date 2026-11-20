@@ -1,0 +1,23 @@
+{
+  "replayed_real_events": 7,
+  "injected_incidents": 12,
+  "true_positives": 12,
+  "false_negatives": 0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "time_to_detect_seconds": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "false_positive_incidents": []
+}

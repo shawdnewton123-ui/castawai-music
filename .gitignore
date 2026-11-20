@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.env
+*.tsbuildinfo
+next-env.d.ts
+
+# Added by ML AI Code: build output and caches
+__pycache__/
+
+# Added by ML AI Code: build output and caches
+.pytest_cache/

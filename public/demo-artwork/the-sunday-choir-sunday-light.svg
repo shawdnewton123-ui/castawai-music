@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800">
+  <defs>
+    <radialGradient id="g" cx="70%" cy="20%" r="90%">
+      <stop offset="0%" stop-color="hsl(30,80%,58%)"/>
+      <stop offset="45%" stop-color="hsl(30,70%,26%)"/>
+      <stop offset="100%" stop-color="#05070D"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <g stroke="rgba(233,238,248,0.14)" fill="none" stroke-width="1.5">
+    <circle cx="400" cy="400" r="60"/><circle cx="400" cy="400" r="102"/><circle cx="400" cy="400" r="144"/><circle cx="400" cy="400" r="186"/><circle cx="400" cy="400" r="228"/><circle cx="400" cy="400" r="270"/><circle cx="400" cy="400" r="312"/><circle cx="400" cy="400" r="354"/><circle cx="400" cy="400" r="396"/>
+  </g>
+  <circle cx="400" cy="400" r="26" fill="rgba(233,238,248,0.85)"/>
+  <text x="56" y="120" font-family="Arial, sans-serif" font-size="26" letter-spacing="10" fill="rgba(233,238,248,0.7)">CASTAWAI</text>
+  <text x="56" y="620" font-family="Arial, sans-serif" font-weight="bold" font-size="64" fill="#E8EDF7">Sunday Light</text>
+  <text x="56" y="672" font-family="Arial, sans-serif" font-size="30" fill="rgba(220,227,240,0.75)">The Sunday Choir</text>
+  <text x="56" y="740" font-family="Arial, sans-serif" font-size="20" letter-spacing="4" fill="rgba(141,153,179,0.9)">DEMO · HUMAN</text>
+</svg>
