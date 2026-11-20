@@ -25,9 +25,15 @@ export function TrackList({
   const [flash, setFlash] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/playlists")
-      .then((r) => r.json())
-      .then((d) => setPlaylists(d.playlists ?? []))
+    fetch("/api/auth/me")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((me) => {
+        if (!me?.user) return;
+        fetch("/api/playlists")
+          .then((r) => r.json())
+          .then((d) => setPlaylists(d.playlists ?? []))
+          .catch(() => {});
+      })
       .catch(() => {});
   }, []);
 
