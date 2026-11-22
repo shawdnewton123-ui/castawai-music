@@ -4,7 +4,6 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { releases, tracks } from "@/db/schema";
 import { getCurrentUser } from "@/lib/auth";
-import { SiteHeader } from "@/components/SiteHeader";
 import { ProfileForm } from "./ProfileForm";
 import { UploadForm } from "./UploadForm";
 import { getArtistForUser } from "./actions";
@@ -70,7 +69,6 @@ export default async function StudioPage() {
 
   return (
     <div className="min-h-screen bg-[#05070D] text-[#DCE3F0]">
-      <SiteHeader />
       <main className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6">
         <p className="eyebrow">Artist Studio</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[#E8EDF7] sm:text-4xl">
