@@ -5,11 +5,18 @@ import {
   timestamp,
   integer,
   boolean,
+  customType,
   pgEnum,
   uniqueIndex,
   index,
   primaryKey,
 } from "drizzle-orm/pg-core";
+
+const bytea = customType<{ data: Buffer }>({
+  dataType() {
+    return "bytea";
+  },
+});
 
 export const userRoleEnum = pgEnum("user_role", ["listener", "artist", "label", "admin"]);
 export const releaseTypeEnum = pgEnum("release_type", ["album", "ep", "single"]);
@@ -176,4 +183,22 @@ export const savedTracks = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [primaryKey({ columns: [t.userId, t.trackId] })]
+);
+
+// Uploaded audio and artwork, stored in Postgres so uploads work on
+// serverless hosting (no writable filesystem). Served via /api/media/[id].
+export const mediaAssets = pgTable(
+  "media_assets",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    ownerUserId: uuid("owner_user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(), // "audio" | "artwork"
+    mimeType: text("mime_type").notNull(),
+    byteSize: integer("byte_size").notNull(),
+    data: bytea("data").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("media_assets_owner_idx").on(t.ownerUserId)]
 );

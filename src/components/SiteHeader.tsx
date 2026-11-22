@@ -29,6 +29,13 @@ export function SiteHeader() {
     { href: "/premium", label: "Premium" },
   ];
 
+  const userLinks =
+    user?.role === "admin"
+      ? [{ href: "/studio", label: "Studio" }, { href: "/admin", label: "Admin" }]
+      : user
+        ? [{ href: "/studio", label: "Studio" }]
+        : [];
+
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
@@ -60,9 +67,9 @@ export function SiteHeader() {
           {user ? (
             <div className="hidden items-center gap-3 md:flex">
               <span className="text-sm text-[var(--color-muted)]">{user.displayName}</span>
-              {user.role === "admin" && (
-                <Link href="/admin" className="text-sm text-[var(--color-accent)] hover:underline">Admin</Link>
-              )}
+              {userLinks.map((l) => (
+                <Link key={l.href} href={l.href} className="text-sm text-[var(--color-accent)] hover:underline">{l.label}</Link>
+              ))}
               <button onClick={logout} className="btn btn-ghost !min-h-9 px-3 text-sm">Sign out</button>
             </div>
           ) : (
@@ -102,11 +109,11 @@ export function SiteHeader() {
                 {l.label}
               </Link>
             ))}
-            {user?.role === "admin" && (
-              <Link href="/admin" onClick={() => setOpen(false)} className="rounded-[var(--radius-sm)] px-2 py-3 text-base font-medium text-[var(--color-accent)] hover:bg-[var(--color-surface)]">
-                Admin
+            {userLinks.map((l) => (
+              <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="rounded-[var(--radius-sm)] px-2 py-3 text-base font-medium text-[var(--color-accent)] hover:bg-[var(--color-surface)]">
+                {l.label}
               </Link>
-            )}
+            ))}
             {user ? (
               <button onClick={logout} className="rounded-[var(--radius-sm)] px-2 py-3 text-left text-base font-medium hover:bg-[var(--color-surface)]">
                 Sign out ({user.displayName})

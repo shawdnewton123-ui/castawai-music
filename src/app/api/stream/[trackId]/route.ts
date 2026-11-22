@@ -1,6 +1,6 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { tracks, releases } from "@/db/schema";
+import { tracks, releases, mediaAssets } from "@/db/schema";
 import { notFound } from "@/lib/api";
 
 // Streams a track that belongs to an approved release. In production this
@@ -16,6 +16,25 @@ export async function GET(_request: Request, ctx: { params: Promise<{ trackId: s
     .limit(1);
   const track = rows[0];
   if (!track) return notFound("Track not found");
+  // Uploaded audio is stored in Postgres as a media asset reference.
+  if (track.audioPath.startsWith("/api/media/")) {
+    const assetId = track.audioPath.slice("/api/media/".length);
+    if (!/^[0-9a-f-]{36}$/i.test(assetId)) return notFound("Audio unavailable");
+    const assets = await db
+      .select({ data: mediaAssets.data, mimeType: mediaAssets.mimeType, byteSize: mediaAssets.byteSize })
+      .from(mediaAssets)
+      .where(eq(mediaAssets.id, assetId))
+      .limit(1);
+    const asset = assets[0];
+    if (!asset) return notFound("Audio unavailable");
+    return new Response(new Uint8Array(asset.data), {
+      headers: {
+        "Content-Type": asset.mimeType,
+        "Content-Length": String(asset.byteSize),
+        "Cache-Control": "private, max-age=3600",
+      },
+    });
+  }
   try {
     const fs = await import("node:fs/promises");
     const path = await import("node:path");
